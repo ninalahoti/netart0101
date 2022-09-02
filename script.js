@@ -84,7 +84,8 @@ function createLamp(tload, tobj, iload, iobj, imat) {
       }
     })
     base.add( tobj );
-    tobj.position.set(0, 0.25, 0);
+    tobj.scale(0.5);
+//     tobj.position.set(0, 0.25, 0);
   });
 
   iload = new GLTFLoader().setPath( 'https://cdn.glitch.global/b1638880-ad84-4bbc-a82e-97d961c93b6a/inner_netart.glb?v=1662151222618' );
@@ -96,7 +97,8 @@ function createLamp(tload, tobj, iload, iobj, imat) {
       }
     })
     base.add( iobj );
-    iobj.position.set(0, 0.25, 0);
+    iobj.scale(0.5);
+//     iobj.position.set(0, 0.25, 0);
   });
 }
 
