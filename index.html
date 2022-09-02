@@ -1,18 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tee's net art portal</title>
-</head>
-<body>
-    <main>
-        <h1> Welcome 2 Tee's Page</h1>
-    <ul>
-        <li> <a href="./week_one/ideas.html"> week one: brainstorm session</a></li>
-    </ul>
-    </main>
-    
-</body>
-</html>
+<script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "/three/build/three.module.js"
+    }
+  }
+</script>
+<script type="module" src="/myscript.js"></script>
+
+<script id="vertexShader" type="x-shader/x-vertex">
+uniform sampler2D noiseTexture;
+uniform float noiseScale;
+
+uniform sampler2D bumpTexture;
+uniform float bumpSpeed;
+uniform float bumpScale;
+
+uniform float time;
+
+varying vec2 vUv;
+
+void main()
+{
+    vUv = uv;
+
+    vec2 uvTimeShift = vUv + vec2( 1.1, 1.9 ) * time * bumpSpeed;
+    vec4 noise = texture2D( noiseTexture, uvTimeShift );
+    vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noise.r, noise.g );
+    // below, using uvTimeShift seems to result in more of a "rippling" effect
+    //   while uvNoiseTimeShift seems to result in more of a "shivering" effect
+    vec4 bumpData = texture2D( bumpTexture, uvTimeShift );
+
+    // move the position along the normal
+    //  but displace the vertices at the poles by the same amount
+    float displacement = ( vUv.y > 0.999 || vUv.y < 0.001 ) ?
+    bumpScale * (0.3 + 0.02 * sin(time)) :
+    bumpScale * bumpData.r;
+    vec3 newPosition = position + normal * displacement;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+}
+</script>
+
+<script id="fragmentShader" type="x-shader/x-vertex">
+uniform sampler2D baseTexture;
+uniform float baseSpeed;
+uniform float repeatS;
+uniform float repeatT;
+
+uniform sampler2D noiseTexture;
+uniform float noiseScale;
+
+uniform sampler2D blendTexture;
+uniform float blendSpeed;
+uniform float blendOffset;
+
+uniform float time;
+uniform float alpha;
+
+varying vec2 vUv;
+
+void main()
+{
+    vec2 uvTimeShift = vUv + vec2( -0.7, 1.5 ) * time * baseSpeed;
+    vec4 noise = texture2D( noiseTexture, uvTimeShift );
+    vec2 uvNoiseTimeShift = vUv + noiseScale * vec2( noise.r, noise.b );
+    vec4 baseColor = texture2D( baseTexture, uvNoiseTimeShift * vec2(repeatS, repeatT) );
+
+    vec2 uvTimeShift2 = vUv + vec2( 1.3, -1.7 ) * time * blendSpeed;
+    vec4 noise2 = texture2D( noiseTexture, uvTimeShift2 );
+    vec2 uvNoiseTimeShift2 = vUv + noiseScale * vec2( noise2.g, noise2.b );
+    vec4 blendColor = texture2D( blendTexture, uvNoiseTimeShift2 * vec2(repeatS, repeatT) ) - blendOffset * vec4(1.0, 1.0, 1.0, 1.0);
+
+    vec4 theColor = baseColor + blendColor;
+    theColor.a = alpha;
+    gl_FragColor = theColor;
+}
+</script>
