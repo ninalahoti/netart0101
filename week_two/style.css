@@ -1,0 +1,67 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+p {
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+p {
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+}
+
+a :hover {
+    text-decoration: none;
+}
+
+#introtext {
+    width: 50%;
+    padding-top: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#buttons {
+    width: 75%;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+button {
+    background-color: black;
+    border: 3px solid white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    line-height: 15px;
+    transition-duration: 0.2s;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+a:link, a:visited, a:hover, a:active { 
+    text-decoration: none; 
+}
