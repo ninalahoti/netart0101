@@ -76,7 +76,7 @@ document.addEventListener('keydown', (event) => {
         document.getElementById("status").innerHTML = "YOU LOST!";
         document.getElementById("word").innerHTML = word;
         setTimeout(function(){
-            window.location.href = "https://www.youtube.com/watch?v=ad2CkiD2CSg&t=26s";
+            window.location.href = "https://www.youtube.com/watch?v=ad2CkiD2CSg";
          }, 800);
     }
   }, false);
