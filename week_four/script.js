@@ -51,6 +51,9 @@ document.addEventListener('keydown', (event) => {
         document.getElementById("word").style.color = "green";
         document.getElementById("status").style.color = "green";
         document.getElementById("status").innerHTML = "YOU WIN!";
+        setTimeout(function(){
+            window.location.href = "https://www.youtube.com/watch?v=fHb1rGdWJbI";
+         }, 800);
     }
 
     // if the letter is not in the word, add to the hangman
@@ -72,5 +75,8 @@ document.addEventListener('keydown', (event) => {
         document.getElementById("status").style.color = "red";
         document.getElementById("status").innerHTML = "YOU LOST!";
         document.getElementById("word").innerHTML = word;
+        setTimeout(function(){
+            window.location.href = "https://www.youtube.com/watch?v=ad2CkiD2CSg&t=26s";
+         }, 800);
     }
   }, false);
